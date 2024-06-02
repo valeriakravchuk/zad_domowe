@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/scripts/redirectLabelClickHandler.js"></script>
+    <script src="/scripts/editButtonHandler.js"></script>
+    <script src="/scripts/finishTask.js"></script>
+</head>
+<body>
+
+<label class="banner">Active tasks</label>
+
+<div class="redirect_buttons">
+    <div class="navigation_bar">
+        <label class="redirect_label" for="redirect_expired_button">Expired tasks</label>
+        <a href="http://localhost:3000/expired" class="redirect_expired_button"></a>
+        <label class="redirect_label" for="navigation_finished_button">Finished tasks</label>
+        <a href="http://localhost:3000/finished" class="navigation_finished_button"></a>
+    </div>
+</div>
+
+<% if (!tasks || tasks.length === 0) { %>
+    <span class="description">You don't have any active tasks at the moment!</span>
+<% } else { %>
+    <div id="tasks">
+        <% tasks.forEach(task => { %>
+            <div class="task_container">
+                <p class="task_id" style="display: none"><%= task.id %></p>
+                <p><span class="task_name"><%= task.name %></span></p>
+                <p><span class="task_deadline"><%= task.deadline.toLocaleString() %></span></p>
+                <span class="task_is_finished" style="display: none"><%= task.is_finished %></span>
+                <span class="task_is_expired" style="display: none"><%= task.is_expired %></span>
+                <button class="finish_button" onclick="finishButtonClick(event)">Finish</button>
+                <button class="edit_button" onclick="handleEditButtonClick(event)">Edit</button>
+            </div>
+        <% }); %>
+    </div>
+<% } %>
+
+<div id="form_container">
+    <div id="add_task_form_container">
+        <h2 class="formTitle">Add task</h2>
+        <form id="add_task_form">
+            <input type="text" id="add_name" name="name">
+            <input type="datetime-local" id="add_deadline" name="deadline">
+            <button class="add_form_button" type="submit">Add task</button>
+        </form>
+        <script src="/scripts/addTask.js"></script>
+    </div>
+
+    <div id="edit_task_form_container">
+        <h2 class="formTitle">Edit task</h2>
+        <form id="edit_task_form">
+            <p id="edit_taskId" style="display: none"></p>
+            <input type="text" id="edit_name" name="name">
+            <input type="datetime-local" id="edit_deadline" name="deadline">
+            <button class="edit_form_button" type="submit">Edit task</button>
+        </form>
+        <script src="/scripts/editTask.js"></script>
+    </div>
+</div>
+<br><br>
+
+</body>
+</html>

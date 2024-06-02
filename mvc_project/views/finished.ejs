@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/scripts/redirectLabelClickHandler.js"></script>
+</head>
+<body>
+
+<label class="banner">Finished tasks</label>
+
+<div class="redirect_buttons">
+    <div class="navigation_bar">
+        <label class="redirect_label" for="redirect_expired_button">Expired tasks</label>
+        <a href="http://localhost:3000/expired" class="redirect_expired_button"></a>
+        <label class="redirect_label" for="navigation_active_button">Active tasks</label>
+        <a href="http://localhost:3000/" class="navigation_active_button"></a>
+    </div>
+</div>
+
+<% if (!tasks || tasks.length === 0) { %>
+    <span class="description">You don't have any finished tasks yet!</span>
+<% } else { %>
+    <div id="tasks">
+        <% tasks.forEach(task => { %>
+            <div class="task_container">
+                <p class="task_id" style="display: none"><%= task.id %></p>
+                <p><span class="task_name"><%= task.name %></span></p>
+                <p><span class="task_deadline"><%= task.deadline.toLocaleString() %></span></p>
+                <span class="task_is_finished" style="display: none"><%= task.is_finished %></span>
+                <span class="task_is_expired" style="display: none"><%= task.is_expired %></span>
+            </div>
+        <% }); %>
+    </div>
+<% } %>
+</body>
+<br><br>
+</html>
